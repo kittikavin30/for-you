@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#fbeef2">
+<title>มีอะไรจะถามหน่อย ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== แก้ข้อความได้ที่ส่วน <script> ด้านล่าง (TEXT) ===== */
+  :root {
+    --pink: #c43d63;
+    --pink-dark: #a52f50;
+    --pink-soft: #fbe3ea;
+    --bg1: #fdf4f6;
+    --bg2: #f6e6ee;
+    --text: #3a2a30;
+    --muted: #8a7179;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: 'Mali', system-ui, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 15% 10%, #ffe9f0 0, transparent 40%),
+      radial-gradient(circle at 90% 85%, #f3e3f7 0, transparent 45%),
+      linear-gradient(180deg, var(--bg1), var(--bg2));
+    min-height: 100dvh;
+    display: flex;
+    align-items: safe center;
+    justify-content: center;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ลายคลื่นจาง ๆ ด้านหลัง */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: repeating-radial-gradient(circle at 0 0, transparent 0 38px, rgba(230,180,200,.18) 39px 40px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255,255,255,.92);
+    border-radius: 28px;
+    padding: 26px 22px 28px;
+    box-shadow: 0 20px 50px rgba(196, 61, 99, .15), 0 2px 6px rgba(0,0,0,.04);
+    text-align: center;
+    animation: pop .6s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  .card.hidden { display: none; }
+
+  @keyframes pop {
+    from { transform: scale(.85) translateY(20px); opacity: 0; }
+    to   { transform: none; opacity: 1; }
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: .8rem;
+    color: var(--muted);
+    background: var(--pink-soft);
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+
+  .mascot { width: 170px; height: 170px; margin: 10px auto 2px; display: block; }
+  .mascot.bob { animation: bob 2.4s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(-6px) rotate(-2deg); } }
+
+  h1 {
+    font-size: 1.65rem;
+    margin: 6px 0 10px;
+    font-weight: 700;
+  }
+  h1 .heart { color: var(--pink); font-size: 1.2rem; }
+
+  .sub {
+    font-size: .95rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0 0 22px;
+  }
+
+  .btn-zone {
+    position: relative;
+    height: 150px;          /* พื้นที่ให้ปุ่ม "ไม่" วิ่งหนี */
+  }
+  .btn {
+    font-family: inherit;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    touch-action: manipulation;
+  }
+  #yes {
+    position: absolute;
+    left: 50%; top: 10px;
+    transform: translateX(-50%) scale(var(--grow, 1));
+    transform-origin: center top;
+    background: var(--pink);
+    color: #fff;
+    font-size: 1.15rem;
+    padding: 14px 34px;
+    box-shadow: 0 8px 20px rgba(196, 61, 99, .35);
+    transition: transform .3s cubic-bezier(.2,1.4,.4,1), background .2s;
+    z-index: 2;
+    white-space: nowrap;
+  }
+  #yes:active { background: var(--pink-dark); }
+  #no {
+    position: absolute;
+    left: 50%; top: 88px;
+    transform: translateX(-50%) scale(var(--shrink, 1));
+    background: var(--pink-soft);
+    color: var(--muted);
+    font-size: .95rem;
+    padding: 10px 22px;
+    transition: left .35s ease, top .35s ease, transform .3s ease, opacity .3s;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  .hint {
+    min-height: 1.4em;
+    font-size: .85rem;
+    color: var(--pink);
+    margin-top: 6px;
+    transition: opacity .3s;
+  }
+
+  /* หน้า 2 */
+  .box {
+    background: linear-gradient(180deg, #fde8ee, #fbdde6);
+    border-radius: 20px;
+    padding: 14px 14px 18px;
+    margin: 6px 0 14px;
+  }
+  .box svg { width: 110px; height: 110px; display: block; margin: 0 auto; }
+  .box p { margin: 4px 0 0; font-size: .95rem; line-height: 1.6; color: #6a4b55; }
+  .note {
+    border: 1.5px dashed #eab8c7;
+    border-radius: 18px;
+    padding: 12px;
+    font-size: .92rem;
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  /* หัวใจลอย */
+  .float-heart {
+    position: fixed;
+    bottom: -40px;
+    z-index: 0;
+    pointer-events: none;
+    animation: rise linear forwards;
+  }
+  @keyframes rise {
+    to { transform: translateY(-115vh) rotate(25deg); opacity: 0; }
+  }
+
+  @media (max-height: 640px) {
+    .mascot { width: 130px; height: 130px; }
+    h1 { font-size: 1.45rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ หน้า 1: คำถาม ============ -->
+<section class="card" id="page1">
+  <span class="tag" id="t-tag1"></span>
+
+  <!-- กระต่ายเขินๆ -->
+  <svg class="mascot bob" viewBox="0 0 200 200" aria-hidden="true">
+    <g id="star1">
+      <path d="M38 52 l5 11 12 1 -9 8 3 12 -11-6 -11 6 3-12 -9-8 12-1z" fill="#e889a6"/>
+    </g>
+    <!-- หู -->
+    <ellipse cx="78" cy="58" rx="17" ry="42" fill="#fff" stroke="#c98f9f" stroke-width="3" transform="rotate(-12 78 58)"/>
+    <ellipse cx="78" cy="62" rx="8" ry="28" fill="#f7b9c9" transform="rotate(-12 78 62)"/>
+    <ellipse cx="124" cy="58" rx="17" ry="42" fill="#fff" stroke="#c98f9f" stroke-width="3" transform="rotate(14 124 58)"/>
+    <ellipse cx="124" cy="62" rx="8" ry="28" fill="#f7b9c9" transform="rotate(14 124 62)"/>
+    <!-- ตัว -->
+    <ellipse cx="100" cy="168" rx="34" ry="24" fill="#fff" stroke="#c98f9f" stroke-width="3"/>
+    <!-- หัว -->
+    <ellipse cx="100" cy="122" rx="52" ry="44" fill="#fff" stroke="#c98f9f" stroke-width="3"/>
+    <!-- ตาปิด (ยิ้ม) -->
+    <path d="M74 120 q8 -8 16 0" stroke="#5a3a44" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    <path d="M110 120 q8 -8 16 0" stroke="#5a3a44" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    <!-- แก้มแดง -->
+    <ellipse cx="70" cy="136" rx="10" ry="6" fill="#f7a8bd" opacity=".8"/>
+    <ellipse cx="130" cy="136" rx="10" ry="6" fill="#f7a8bd" opacity=".8"/>
+    <!-- ปาก -->
+    <path d="M94 138 q6 6 12 0" stroke="#5a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <!-- มือจับกัน -->
+    <circle cx="90" cy="160" r="9" fill="#fff" stroke="#c98f9f" stroke-width="3"/>
+    <circle cx="108" cy="160" r="9" fill="#fff" stroke="#c98f9f" stroke-width="3"/>
+    <!-- หัวใจเล็ก -->
+    <path d="M150 70 c0-6 9-6 9 0 c0-6 9-6 9 0 c0 7 -9 12 -9 12 c0 0 -9-5 -9-12z" fill="#e4577f"/>
+  </svg>
+
+  <h1><span id="t-title1"></span> <span class="heart">♡</span></h1>
+  <p class="sub" id="t-sub1"></p>
+
+  <div class="btn-zone" id="zone">
+    <button class="btn" id="yes"></button>
+    <button class="btn" id="no"></button>
+  </div>
+  <div class="hint" id="hint"></div>
+</section>
+
+<!-- ============ หน้า 2: ขอบคุณ ============ -->
+<section class="card hidden" id="page2">
+  <span class="tag" id="t-tag2"></span>
+
+  <!-- กระต่ายตาหัวใจ -->
+  <svg class="mascot bob" viewBox="0 0 200 200" aria-hidden="true">
+    <g fill="#e4577f">
+      <path d="M30 60 c0-6 9-6 9 0 c0-6 9-6 9 0 c0 7-9 12-9 12 c0 0-9-5-9-12z"/>
+      <path d="M152 52 c0-7 11-7 11 0 c0-7 11-7 11 0 c0 9-11 15-11 15 c0 0-11-6-11-15z"/>
+      <path d="M22 140 c0-5 7-5 7 0 c0-5 7-5 7 0 c0 6-7 10-7 10 c0 0-7-4-7-10z" fill="#c8a2c8"/>
+      <path d="M168 132 c0-6 9-6 9 0 c0-6 9-6 9 0 c0 7-9 12-9 12 c0 0-9-5-9-12z"/>
+      <path d="M44 100 c0-4 6-4 6 0 c0-4 6-4 6 0 c0 5-6 8-6 8 c0 0-6-3-6-8z" fill="#f2a5b8"/>
+    </g>
+    <ellipse cx="72" cy="66" rx="16" ry="40" fill="#fff" stroke="#c98f9f" stroke-width="3" transform="rotate(-28 72 66)"/>
+    <ellipse cx="72" cy="70" rx="7" ry="26" fill="#f7b9c9" transform="rotate(-28 72 70)"/>
+    <ellipse cx="130" cy="66" rx="16" ry="40" fill="#fff" stroke="#c98f9f" stroke-width="3" transform="rotate(28 130 66)"/>
+    <ellipse cx="130" cy="70" rx="7" ry="26" fill="#f7b9c9" transform="rotate(28 130 70)"/>
+    <ellipse cx="100" cy="170" rx="32" ry="22" fill="#fff" stroke="#c98f9f" stroke-width="3"/>
+    <ellipse cx="100" cy="124" rx="52" ry="44" fill="#fff" stroke="#c98f9f" stroke-width="3"/>
+    <!-- ตาหัวใจ -->
+    <path d="M70 116 c0-6 8-6 8 0 c0-6 8-6 8 0 c0 7-8 12-8 12 c0 0-8-5-8-12z" fill="#e4577f"/>
+    <path d="M114 116 c0-6 8-6 8 0 c0-6 8-6 8 0 c0 7-8 12-8 12 c0 0-8-5-8-12z" fill="#e4577f"/>
+    <ellipse cx="68" cy="140" rx="10" ry="6" fill="#f7a8bd"/>
+    <ellipse cx="132" cy="140" rx="10" ry="6" fill="#f7a8bd"/>
+    <path d="M92 138 q8 10 16 0" stroke="#5a3a44" stroke-width="2.6" fill="#f08aa6" stroke-linecap="round"/>
+  </svg>
+
+  <h1><span id="t-title2"></span> <span class="heart">♡</span></h1>
+  <p class="sub" id="t-sub2"></p>
+
+  <div class="box">
+    <!-- กระต่ายถือขนม -->
+    <svg viewBox="0 0 200 200" aria-hidden="true">
+      <ellipse cx="78" cy="56" rx="15" ry="38" fill="#fff" stroke="#c98f9f" stroke-width="3" transform="rotate(-10 78 56)"/>
+      <ellipse cx="78" cy="60" rx="7" ry="25" fill="#f7b9c9" transform="rotate(-10 78 60)"/>
+      <ellipse cx="122" cy="56" rx="15" ry="38" fill="#fff" stroke="#c98f9f" stroke-width="3" transform="rotate(10 122 56)"/>
+      <ellipse cx="122" cy="60" rx="7" ry="25" fill="#f7b9c9" transform="rotate(10 122 60)"/>
+      <ellipse cx="100" cy="166" rx="32" ry="24" fill="#fff" stroke="#c98f9f" stroke-width="3"/>
+      <ellipse cx="100" cy="116" rx="48" ry="40" fill="#fff" stroke="#c98f9f" stroke-width="3"/>
+      <path d="M76 114 q7 -7 14 0" stroke="#5a3a44" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M110 114 q7 -7 14 0" stroke="#5a3a44" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <ellipse cx="72" cy="128" rx="8" ry="5" fill="#f7a8bd"/>
+      <ellipse cx="128" cy="128" rx="8" ry="5" fill="#f7a8bd"/>
+      <path d="M95 130 q5 5 10 0" stroke="#5a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <!-- ขนม (คัพเค้ก) -->
+      <path d="M84 158 h32 l-5 24 h-22z" fill="#f2c27b" stroke="#c98f9f" stroke-width="2.5"/>
+      <path d="M80 158 q20 -26 40 0z" fill="#f7b9c9" stroke="#c98f9f" stroke-width="2.5"/>
+      <circle cx="100" cy="138" r="5" fill="#e4577f"/>
+    </svg>
+    <p id="t-box"></p>
+  </div>
+
+  <div class="note" id="t-note"></div>
+</section>
+
+<script>
+  /* ================= แก้ข้อความตรงนี้ได้เลย ================= */
+  const TEXT = {
+    tag1:   "คำถามเล็ก ๆ จากเรา",
+    title1: "ขอจีบเธอได้มั้ย?",
+    sub1:   "ไม่ได้อยากรีบร้อน แค่อยากค่อย ๆ ทำความรู้จักเธอให้มากขึ้น ถ้าเธอโอเค เราจะตั้งใจทำให้ทุกวันมีรอยยิ้มนะ",
+    yes:    "จีบหน่อยได้",
+    no:     "ไม่ให้จีบ",
+
+    // ข้อความที่ขึ้นทุกครั้งที่พยายามกด "ไม่"
+    hints: [
+      "กดปุ่มสีชมพูเถอะนะ ♡",
+      "ปุ่มนั้นไม่ค่อยว่างนะ ลองอีกปุ่มสิ",
+      "เอ๊ะ จับไม่ทันหรอก 555",
+      "เราไม่ยอมแพ้ง่าย ๆ หรอกนะ",
+      "ใจอ่อนหน่อยน้า~",
+      "ปุ่มชมพูรออยู่นะ ♡",
+    ],
+    // ปุ่ม "ไม่" จะเปลี่ยนชื่อไปเรื่อย ๆ
+    noLabels: ["ไม่ให้จีบ", "แน่ใจหรอ?", "คิดใหม่นะ", "จริงดิ?", "ไม่เอาน่า", "ใจร้ายอะ", "…"],
+
+    tag2:   "ดีใจที่สุดเลย",
+    title2: "ขอบคุณที่ให้โอกาสนะ",
+    sub2:   "ดีใจมากเลยที่เธอใจดีกับเรา<br>จากนี้เราจะทำให้เธอยิ้มได้ทุกวันเลย",
+    box:    "ขอชวนเธอไปกินขนมสักมื้อนะ<br>เราเลี้ยงเอง",
+    note:   "แคปหน้านี้ส่งในแชทให้เราด้วยนะ<br>เราจะรอตอบเธออยู่น้า ♡",
+  };
+  /* ========================================================== */
+
+  const $ = id => document.getElementById(id);
+  ["tag1","title1","sub1","tag2","title2","sub2","box","note"].forEach(k => $("t-" + k).innerHTML = TEXT[k]);
+  $("yes").textContent = TEXT.yes;
+  $("no").textContent = TEXT.no;
+
+  const zone = $("zone"), yes = $("yes"), no = $("no"), hint = $("hint");
+  let tries = 0, last = 0;
+
+  function dodge(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    const now = Date.now();
+    if (now - last < 300) return;   // แตะครั้งเดียวนับครั้งเดียว
+    last = now;
+    tries++;
+
+    // หาตำแหน่งใหม่ในพื้นที่ปุ่ม ไม่ให้ทับปุ่ม "ใช่"
+    const zr = zone.getBoundingClientRect();
+    const nr = no.getBoundingClientRect();
+    const yr = yes.getBoundingClientRect();
+    const maxX = zr.width - nr.width / 2 - 4;
+    const minX = nr.width / 2 + 4;
+    const maxY = zr.height - nr.height - 2;
+    let x, y, guard = 0;
+    do {
+      x = minX + Math.random() * (maxX - minX);
+      y = Math.random() * maxY;
+      guard++;
+      const ax = zr.left + x - nr.width / 2, ay = zr.top + y;
+      const overlap = !(ax + nr.width < yr.left - 6 || ax > yr.right + 6 || ay + nr.height < yr.top - 6 || ay > yr.bottom + 6);
+      if (!overlap) break;
+    } while (guard < 40);
+    no.style.left = x + "px";
+    no.style.top = y + "px";
+
+    // ปุ่ม "ไม่" เล็กลง ปุ่ม "ใช่" ใหญ่ขึ้น
+    no.style.setProperty("--shrink", Math.max(0.55, 1 - tries * 0.07));
+    yes.style.setProperty("--grow", Math.min(1.45, 1 + tries * 0.06));
+    no.textContent = TEXT.noLabels[Math.min(tries, TEXT.noLabels.length - 1)];
+    hint.textContent = TEXT.hints[(tries - 1) % TEXT.hints.length];
+    if (navigator.vibrate) navigator.vibrate(15);
+  }
+
+  // มือถือ: หนีตั้งแต่นิ้วแตะ / คอม: หนีตอนเมาส์ชี้
+  no.addEventListener("touchstart", dodge, { passive: false });
+  no.addEventListener("pointerdown", dodge);
+  no.addEventListener("mouseenter", dodge);
+  no.addEventListener("click", dodge);
+
+  yes.addEventListener("click", () => {
+    $("page1").classList.add("hidden");
+    $("page2").classList.remove("hidden");
+    window.scrollTo(0, 0);
+    if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
+    burst();
+    setInterval(() => spawnHeart(), 700);
+  });
+
+  function spawnHeart() {
+    const h = document.createElement("div");
+    h.className = "float-heart";
+    h.textContent = ["♡","❤","💕","💗"][Math.floor(Math.random() * 4)];
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = 14 + Math.random() * 22 + "px";
+    h.style.color = ["#e4577f","#f2a5b8","#c43d63","#c8a2c8"][Math.floor(Math.random() * 4)];
+    h.style.animationDuration = 4 + Math.random() * 4 + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 9000);
+  }
+  function burst() { for (let i = 0; i < 18; i++) setTimeout(spawnHeart, i * 60); }
+</script>
+</body>
+</html>
